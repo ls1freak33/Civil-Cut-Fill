@@ -50,6 +50,9 @@ const overlayCtx = el.overlayCanvas.getContext('2d');
 function setMode(mode) {
   state.mode = mode;
   el.modeStatus.textContent = `Mode: ${mode || 'none'}`;
+  if (mode && el.viewer) {
+    el.viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function updatePointCounts() {
@@ -74,6 +77,7 @@ async function renderPage() {
   el.overlayCanvas.width = viewport.width;
   el.overlayCanvas.height = viewport.height;
   await page.render({ canvasContext: pdfCtx, viewport }).promise;
+  el.viewer.style.minHeight = `${Math.max(500, Math.min(viewport.height + 24, 1200))}px`;
   el.pageInfo.textContent = `Page ${state.pageNum} / ${state.pageCount}`;
   drawOverlay();
 }
