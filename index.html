@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crestview Cut/Fill MVP</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.mjs" type="module"></script>
+</head>
+<body>
+  <header>
+    <h1>Crestview Cut/Fill MVP</h1>
+    <div class="sub">Browser-based starter for grading takeoff from plan PDFs</div>
+  </header>
+
+  <main>
+    <aside class="panel controls">
+      <section>
+        <h2>1) Load Sheet</h2>
+        <input type="file" id="pdfFile" accept="application/pdf" />
+        <div class="row">
+          <button id="prevPage">Prev</button>
+          <span id="pageInfo">Page 0 / 0</span>
+          <button id="nextPage">Next</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Scale</h2>
+        <p>Click two points on a known distance, then enter the real distance in feet.</p>
+        <button id="modeScale">Pick Scale Points</button>
+        <div class="row stack">
+          <label>Known Distance (ft)
+            <input id="knownDistance" type="number" step="0.01" min="0" />
+          </label>
+          <button id="saveScale">Save Scale</button>
+        </div>
+        <div id="scaleStatus">Scale: not set</div>
+      </section>
+
+      <section>
+        <h2>3) Boundary</h2>
+        <p>Trace the work area. Double-click to close the polygon.</p>
+        <button id="modeBoundary">Draw Boundary</button>
+        <button id="clearBoundary">Clear Boundary</button>
+      </section>
+
+      <section>
+        <h2>4) Elevation Points</h2>
+        <div class="row stack">
+          <label>Elevation (ft)
+            <input id="pointElevation" type="number" step="0.01" />
+          </label>
+          <div class="row">
+            <button id="modeExisting">Add Existing Point</button>
+            <button id="modeProposed">Add Proposed Point</button>
+          </div>
+          <div class="row">
+            <button id="undoPoint">Undo Last Point</button>
+            <button id="clearPoints">Clear All Points</button>
+          </div>
+        </div>
+        <div id="pointCounts"></div>
+      </section>
+
+      <section>
+        <h2>5) Calculate</h2>
+        <p>This MVP uses point-based interpolation over a grid. Good for testing workflow, not final production quantities.</p>
+        <div class="row stack">
+          <label>Grid Spacing (ft)
+            <input id="gridSpacing" type="number" step="1" min="1" value="5" />
+          </label>
+          <label>Swell / Shrink Adjustment (%)
+            <input id="adjustPct" type="number" step="0.1" value="0" />
+          </label>
+          <button id="runCalc">Run Cut / Fill</button>
+        </div>
+        <div id="results"></div>
+      </section>
+
+      <section>
+        <h2>6) Save / Load Session</h2>
+        <div class="row">
+          <button id="exportJson">Export JSON</button>
+          <input type="file" id="importJson" accept="application/json" />
+        </div>
+      </section>
+    </aside>
+
+    <section class="viewerWrap">
+      <div class="toolbar">
+        <span id="modeStatus">Mode: none</span>
+        <span id="cursorStatus"></span>
+      </div>
+      <div class="viewer" id="viewer">
+        <canvas id="pdfCanvas"></canvas>
+        <canvas id="overlayCanvas"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    MVP notes: existing points = blue, proposed points = orange, boundary = green, scale points = red.
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
