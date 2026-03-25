@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Crestview Cut/Fill MVP</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.mjs" type="module"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
   <header>
@@ -18,6 +18,7 @@
       <section>
         <h2>1) Load Sheet</h2>
         <input type="file" id="pdfFile" accept="application/pdf" />
+        <div id="loadStatus" class="status">No PDF loaded.</div>
         <div class="row">
           <button id="prevPage">Prev</button>
           <span id="pageInfo">Page 0 / 0</span>
@@ -27,7 +28,7 @@
 
       <section>
         <h2>2) Scale</h2>
-        <p>Click two points on a known distance, then enter the real distance in feet.</p>
+        <p>Tap two points on a known distance, then enter the real distance in feet.</p>
         <button id="modeScale">Pick Scale Points</button>
         <div class="row stack">
           <label>Known Distance (ft)
@@ -40,7 +41,7 @@
 
       <section>
         <h2>3) Boundary</h2>
-        <p>Trace the work area. Double-click to close the polygon.</p>
+        <p>Trace the work area. Double-tap near the last point to close.</p>
         <button id="modeBoundary">Draw Boundary</button>
         <button id="clearBoundary">Clear Boundary</button>
       </section>
@@ -65,7 +66,7 @@
 
       <section>
         <h2>5) Calculate</h2>
-        <p>This MVP uses point-based interpolation over a grid. Good for testing workflow, not final production quantities.</p>
+        <p>This MVP uses point-based interpolation over a grid. Good for workflow testing, not final production quantities.</p>
         <div class="row stack">
           <label>Grid Spacing (ft)
             <input id="gridSpacing" type="number" step="1" min="1" value="5" />
@@ -76,14 +77,6 @@
           <button id="runCalc">Run Cut / Fill</button>
         </div>
         <div id="results"></div>
-      </section>
-
-      <section>
-        <h2>6) Save / Load Session</h2>
-        <div class="row">
-          <button id="exportJson">Export JSON</button>
-          <input type="file" id="importJson" accept="application/json" />
-        </div>
       </section>
     </aside>
 
@@ -100,9 +93,9 @@
   </main>
 
   <footer>
-    MVP notes: existing points = blue, proposed points = orange, boundary = green, scale points = red.
+    Existing points = blue, proposed points = orange, boundary = green, scale points = red.
   </footer>
 
-  <script type="module" src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
