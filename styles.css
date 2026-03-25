@@ -27,3 +27,7 @@ button { background:#fff; }
   .viewerWrap { flex:1; }
   .viewer { min-height:calc(100vh - 150px); max-height:calc(100vh - 150px); }
 }
+
+.toolbarRight { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.toolbarRight button { padding:8px 12px; font-size:16px; }
+#zoomStatus { min-width:52px; text-align:center; font-weight:600; }
