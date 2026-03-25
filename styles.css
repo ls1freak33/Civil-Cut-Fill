@@ -76,3 +76,13 @@ button:hover { background: #eef4f8; }
 @media (max-width: 980px) {
   main { grid-template-columns: 1fr; }
 }
+
+
+.viewerWrap { min-height: 70vh; }
+.viewer { min-height: 60vh; }
+#pdfCanvas, #overlayCanvas { touch-action: manipulation; }
+@media (max-width: 980px) {
+  .viewerWrap { min-height: 75vh; }
+  .viewer { min-height: 68vh; padding: 8px; }
+  #pdfCanvas, #overlayCanvas { top: 8px; left: 8px; }
+}
